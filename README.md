@@ -55,7 +55,7 @@ Análisis de series de tiempo del Revenue mensual.
 Este proyecto simuló un entorno de producción real, enfrentando y resolviendo problemas de calidad de datos y compatibilidad de versiones.
 
 ### 🛠️ Stack Tecnológico
-* **Plataforma:** Databricks Community Edition (Spark 4.0).
+* **Plataforma:** Databricks Free Edition (Spark 4.0).
 * **Procesamiento:** PySpark (DataFrames) para limpieza y optimización.
 * **Análisis:** Spark SQL (Window Functions, CTEs) para lógica de negocio.
 * **Visualización:** Databricks Dashboards.
@@ -75,3 +75,23 @@ df_cleaned = df_cleaned.withColumn(
         F.try_to_timestamp(F.col("InvoiceDate"), F.lit("MM/dd/yyyy HH:mm"))
     )
 )
+```
+
+#### 2. Inyección de Variables en SQL
+La sintaxis SET variable presentó incompatibilidades en la versión del cluster.
+
+Solución: Uso de f-strings de Python para inyectar parámetros dinámicos (como la fecha de corte para el análisis RFM) directamente en el contexto de Spark SQL.
+
+#### 3. Optimización de Rendimiento
+Estrategia: Filtrado temprano de nulos (CustomerID) y duplicados antes de aplicar transformaciones costosas, reduciendo el volumen de datos en un 27% al inicio del pipeline.
+
+### 📂 Estructura del Repositorio
+- img/ : Carpeta con evidencias y capturas del análisis.
+- Análisis Exploratorio de Datos (EDA): E-Commerce Retail.dbc: Archivo fuente de Databricks (Código + Dashboard).
+- Análisis Exploratorio de Datos (EDA): E-Commerce Retail.ipynb (notebook)
+- README.md: Documentación técnica y de negocio.
+
+### 👨‍💻 Autor
+Erickson Otaño Ingeniero de Datos | Cloud Data Platforms
+
+Proyecto realizado como parte de una práctica intensiva de procesamiento de datos a gran escala.
