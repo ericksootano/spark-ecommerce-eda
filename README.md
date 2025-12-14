@@ -1,58 +1,73 @@
-# 📊 E-Commerce Data Analysis & Engineering con PySpark
+# 🚀 E-Commerce Data Engineering & Analytics (End-to-End)
 
 ![Databricks](https://img.shields.io/badge/Databricks-FF3621?style=for-the-badge&logo=databricks&logoColor=white)
 ![Apache Spark](https://img.shields.io/badge/Apache%20Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
 
-> **Un proyecto End-to-End de Ingeniería de Datos y Análisis Exploratorio (EDA) simulando un entorno de Big Data.**
-
-## 📖 Descripción del Proyecto
-
-Este repositorio contiene el flujo de trabajo completo para el procesamiento y análisis de un dataset transaccional de E-Commerce real (~540,000 registros). El objetivo principal fue transformar datos crudos y "sucios" en un **Dashboard Ejecutivo** accionable, utilizando la potencia de procesamiento distribuido de **Apache Spark (PySpark)** en la plataforma **Databricks Free Edition**.
-
-El proyecto aborda desde la ingesta y limpieza de datos hasta la ingeniería de características compleja y la visualización de estrategias de negocio.
+> **Transformación de datos crudos (~540k transacciones) en estrategia de negocio utilizando PySpark y Databricks en un entorno de Big Data.**
 
 ---
 
-## 🚀 Dashboard Ejecutivo
+## 📊 Executive Dashboard (Resultado Final)
 
-*(Aquí puedes colocar la captura de pantalla de tu Dashboard completo)*
-![Dashboard Preview](![Dashboard](1.DashboardE-commerce.png)
+El objetivo principal de este proyecto fue construir un pipeline de datos robusto que alimentara un tablero ejecutivo para la toma de decisiones. El resultado consolida métricas de retención (RFM), tendencias operativas y desempeño de productos.
 
----
-
-## ⚙️ Arquitectura y Tecnologías
-
-* **Plataforma:** Databricks (Spark 4.0)
-* **Lenguajes:** Python (PySpark) y Spark SQL.
-* **Limpieza de Datos:** Manejo de formatos de fecha inconsistentes (`try_to_timestamp`, `coalesce`), imputación de nulos y eliminación de duplicados.
-* **Ingeniería de Características:** Creación de métricas temporales (Year-Month) y financieras (Revenue por línea).
-* **Análisis Avanzado:** Segmentación RFM (Recencia, Frecuencia, Monetario) utilizando **Window Functions** y **CTEs**.
+![Dashboard Completo](img/dashboard_full.png)
 
 ---
 
-## 💡 Insights de Negocio Clave
+## 💡 Key Business Insights (Resultados del Análisis)
 
-Tras procesar los datos, se descubrieron los siguientes patrones estratégicos:
+A través de consultas SQL avanzadas y visualización de datos, se extrajeron 4 hallazgos estratégicos de alto impacto:
 
-| Insight | Descripción | Impacto |
-| :--- | :--- | :--- |
-| **👑 Dominio del Reino Unido** | El **~90%** de los ingresos provienen de UK. | Riesgo alto de dependencia de un solo mercado. Se recomienda expansión a Alemania/Francia. |
-| **📅 La "Hora Dorada"** | El 80% de las transacciones ocurren entre **10:00 AM y 3:00 PM** (Lun-Jue). | Ventana crítica para soporte al cliente y campañas de marketing. Evitar mantenimientos en este horario. |
-| **💎 Segmentación VIP** | Un pequeño grupo de clientes **"Champions"** (Score 4-4-4) genera la mayor parte del valor. | Prioridad absoluta en retención. Es más rentable fidelizarlos que adquirir nuevos. |
-| **📈 Estacionalidad** | Pico dramático de ventas en **Noviembre**. | La planificación de inventario para Q4 debe comenzar en Septiembre. |
+### 1. El Valor de la Segmentación (Análisis RFM)
+Utilizando ingeniería de características avanzada, segmentamos a los usuarios en base a su Recencia, Frecuencia y Valor Monetario.
+* **Hallazgo:** El segmento **"VIP / Champions"** (Score 4-4-4) representa una minoría de usuarios pero con un ticket promedio de **~$9,000**, comparado con ~$400 de los clientes nuevos.
+* **Estrategia:** La retención de estos 488 clientes VIP es crítica para la estabilidad financiera del negocio.
+
+![Tabla RFM](img/tabla_rfm.png.jpeg)
+
+### 2. Eficiencia Operativa: La "Hora Dorada"
+Mapeo de intensidad de transacciones (Heatmap) por día y hora.
+* **Hallazgo:** El 80% de la actividad transaccional se concentra de **Lunes a Jueves entre las 10:00 AM y 3:00 PM**.
+* **Estrategia:** Programar ventanas de mantenimiento y despliegues técnicos fuera de este horario (ej. 1 AM - 7 AM) para evitar pérdidas de revenue.
+
+![Heatmap Ventas](img/heatmap_ventas.png)
+
+### 3. Estacionalidad y Planificación
+Análisis de series de tiempo del Revenue mensual.
+* **Hallazgo:** Se detectó un crecimiento sostenido con un pico agresivo en **Noviembre** (pre-campaña navideña).
+* **Estrategia:** La planificación de stock y logística para Q4 debe cerrarse mandatoriamente en Septiembre para cubrir la demanda.
+
+![Tendencia Mensual](img/tendencia_mensual.png)
+
+### 4. Principio de Pareto en Productos
+* **Hallazgo:** A pesar de contar con miles de SKUs, el Top 10 de productos genera una parte desproporcionada del ingreso total.
+* **Estrategia:** Asegurar disponibilidad 100% (stock de seguridad) para estos 10 productos clave es más prioritario que diversificar el catálogo.
+
+![Top Productos](img/top_productos.png)
 
 ---
 
-## 🛠️ Desafíos Técnicos Superados
+## ⚙️ Ingeniería de Datos & Desafíos Técnicos
 
-### 1. Fechas en Spark 4.0
-El dataset presentaba formatos mixtos (`M/d/yyyy` vs `MM/dd/yyyy`) que causaban fallos en el pipeline.
-**Solución:** Implementación de una lógica de coalescencia robusta:
+Este proyecto simuló un entorno de producción real, enfrentando y resolviendo problemas de calidad de datos y compatibilidad de versiones.
+
+### 🛠️ Stack Tecnológico
+* **Plataforma:** Databricks Community Edition (Spark 4.0).
+* **Procesamiento:** PySpark (DataFrames) para limpieza y optimización.
+* **Análisis:** Spark SQL (Window Functions, CTEs) para lógica de negocio.
+* **Visualización:** Databricks Dashboards.
+
+### 🔧 Desafíos Superados
+
+#### 1. Inconsistencia de Formatos de Fecha (Spark 4.0)
+El dataset presentaba fechas con formatos mixtos (`M/d/yyyy` y `MM/dd/yyyy`) que causaban fallos críticos en el parser estricto de Spark.
+* **Solución:** Implementación de lógica `coalesce` con `try_to_timestamp` para manejar excepciones sin detener el pipeline.
 
 ```python
-# Snippet de la solución
+# Solución robusta para parsing de fechas
 df_cleaned = df_cleaned.withColumn(
     "InvoiceDate",
     F.coalesce(
@@ -60,26 +75,3 @@ df_cleaned = df_cleaned.withColumn(
         F.try_to_timestamp(F.col("InvoiceDate"), F.lit("MM/dd/yyyy HH:mm"))
     )
 )
-```
-
-### 2. Variables SQL en Spark 4.0
-La nueva versión de Spark maneja diferente la inyección de variables en SQL (SET variable...). Solución: Uso de f-strings de Python para inyectar parámetros dinámicos (como la fecha de corte para el análisis RFM) directamente en las consultas SQL.
-
-## 📊 Visualizaciones Destacadas
-Mapa de Calor (Patrones de Compra)
-Muestra la concentración de ventas por día y hora.
-
-### Top Productos (Pareto)
-Identificación de los Best Sellers.
-
-📂 Estructura del Repositorio
-- EDA_ECommerce_Project.dbc: Archivo nativo de Databricks (incluye datos, código y dashboard).
-
-- EDA_ECommerce_Project.ipynb: Versión Jupyter Notebook para visualización en GitHub.
-
-- README.md: Documentación del proyecto.
-
-👨‍💻 Autor
-Erickson Otaño Ingeniero de Datos | Cloud Data Platforms
-
-Este proyecto fue realizado como parte de una práctica intensiva de procesamiento de datos a gran escala.
