@@ -59,6 +59,8 @@ Este proyecto simuló un entorno de producción real, enfrentando y resolviendo 
 * **Procesamiento:** PySpark (DataFrames) para limpieza y optimización.
 * **Análisis:** Spark SQL (Window Functions, CTEs) para lógica de negocio.
 * **Visualización:** Databricks Dashboards.
+* **Fuente de datos:** Kaggle  [Kaggle E-Commerce Data](https://www.kaggle.com/datasets/carrie1/ecommerce-data/data)
+
 
 ### 🔧 Desafíos Superados
 
